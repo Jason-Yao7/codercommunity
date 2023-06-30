@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper文件相当于DAO接口的‘实现类’，namespace属性要指定`实现`DAO接口的全限定名-->
+<mapper namespace="com.imooc.bilibili.dao.AuthRoleElementOperationDao">
+    <resultMap id="AuthElementOperationResultMap" type="AuthRoleElementOperation">
+        <id column="id" property="id"/>
+        <result column="roleId" property="roleId"/>
+        <result column="elementOperationId" property="elementOperationId"/>
+        <association property="authElementOperation" javaType="AuthElementOperation">
+            <result column="elementName" property="elementName"/>
+            <result column="elementCode" property="elementCode"/>
+            <result column="operationType" property="operationType"/>
+        </association>
+    </resultMap>
+
+    <select id="getRoleElementOperationsByRoleIds" parameterType="java.util.Set"
+            resultMap="AuthElementOperationResultMap">
+        select
+        areo.*,
+        aeo.elementName,
+        aeo.elementCode,
+        aeo.operationType
+        from
+        t_auth_role_element_operation areo
+        left join t_auth_element_operation aeo on areo.elementOperationId = aeo.id
+        where
+        areo.roleId in
+        <foreach collection="roleIdSet" item="roleId" index="index" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+
+</mapper>

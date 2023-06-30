@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper文件相当于DAO接口的‘实现类’，namespace属性要指定`实现`DAO接口的全限定名-->
+<mapper namespace="com.imooc.bilibili.dao.UserMomentsDao">
+    <insert id="addUserMoments" parameterType="UserMoment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_moments(userId, `type`, contentId, createTime)
+        values (#{userId}, #{type}, #{contentId}, #{createTime});
+    </insert>
+
+
+</mapper>
